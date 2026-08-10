@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Recruiting - Super Mario Epic Team</title>
+	  <link rel="stylesheet" href="recruiting.css">
+	  <script defer src="recruiting.js"></script>
+	  <meta name="description" content="A serene place where anyone can join the development of our projects and progress at their own pace." />
+	  <meta name="keywords" content="Super Mario, Epic Team, mod, Recruiting, Form Spree" />
+	  <meta name="author" content="Super Mario Epic Team" />
+	</head>
+	<body>
+	  <main>
+		<h1>Join the Super Mario Epic Team!</h1>
+		<form action="https://formspree.io/f/xjkokqnj" method="POST" >
+		  <label>
+			Your email:
+			<input type="email" name="email" id="email" required>
+		  </label>
+		  <label>
+			<textarea name="message" id="generatedMessage" hidden></textarea>
+		  </label>
+
+		  <div class="information">
+			This form certifies that your involvement will be consistent throughout your development stay, in order to avoid Discord spams from the project's planner.
+		  </div>
+
+		  <label for="project">Name of the Project you want to join to:</label>
+		  <select id="project" name="project" required>
+			<option value="Super Mario Epic Wii">Super Mario Epic Wii</option>
+		  </select>
+
+		  <label for="role">Desired role in the team:</label>
+		  <select id="role" name="role" required>
+			<option value="Level designer">Level Designer *</option>
+			<option value="Graphiste / Pixel Artist">Graphism / Pixel Artist *</option>
+			<option value="Music composer">Music composer</option>
+			<option value="Programmr / ASM">Programmer / ASM</option>
+			<option value="Sound Designer">Sound Designer</option>
+			<option value="Tileset Designer">Tileset Designer *</option>
+			<option value="3D Modeler">3D Modeler *</option>
+		  </select>
+
+		  <div class="information">
+			Options marked with an <b>*</b> are the ones we need the most.
+		  </div>
+
+		  <label for="duree">Duration during which you will be active (in weeks)</label>
+		  <input type="number" id="duree" name="duree" min="1" max="255" required>
+
+		  <div class="warning">
+			⚠️ If you leave development and come back later, you will need to fill out this form again.
+		  </div>
+
+		  <div class="checkbox">
+			<input type="checkbox" id="secrecy" name="secrecy" required>
+			<label for="secrecy">I understand that the development must be kept secret.</label>
+		  </div>
+
+		  <div class="checkbox">
+			<input type="checkbox" id="presence" name="presence" required>
+			<label for="presence">I understood well that my presence in the development requires constant activity throughout your working stay.</label>
+		  </div>
+
+		  <div class="submit-section">
+			<button type="submit">Send my application</button>
+		  </div>
+
+		  <div class="discord">
+			<p>Once the form is completed, click here to contact the project manager:</p>
+			<a href="https://discord.com/channels/@me/1060297161880899654" target="_blank">Contact the team leader <purple>#lidya1446</purple> on Discord</a>
+		  </div>
+
+		  <a href="https://discord.gg/djfsV7rBgK" target="_blank">You can also consider joining our development server over here.</a>
+		</form>
+	  </main>
+	</body>
+	<a href="../index.html" class="home-button" title="Back to Home Page">
+	  <img src="home.png" alt="Main Page">
+	</a>
+</html>
