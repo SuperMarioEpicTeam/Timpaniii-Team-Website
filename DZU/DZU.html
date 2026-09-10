@@ -3,33 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#060a1c">
+<meta name="theme-color" content="#08060a">
 <title>Danger Zone U | Timpaniii Team</title>
 <style>
   @font-face{ font-family:'Paper Mario'; src:url('../assets/fonts/PaperMarioFont.ttf') format('truetype'); font-display:swap; }
   @font-face{ font-family:'Mario Script'; src:url('../assets/fonts/SuperMarioScript2Demo-Regular.ttf') format('truetype'); font-display:swap; }
-  *{ box-sizing:border-box; }
-  html{ touch-action:manipulation; }
-  body{
-    margin:0; min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:22px; text-align:center; padding:32px;
-    background:radial-gradient(circle at 50% 20%, #10204a, #060a1c 70%);
-    color:#dfe4f5; font-family:'Mario Script', system-ui, sans-serif;
+
+  :root{
+    --void:#08060a;
+    --panel:#131017;
+    --panel-edge:#2e161b;
+    --ink:#efe9e2;
+    --ink-dim:#b9aeb0;
+    --red:#c4272c;
+    --red-deep:#6e1319;
+    --gold:#f3c34e;
+    --tile:84px;
   }
-  h1{ font-family:'Paper Mario', system-ui, sans-serif; color:#b6a3e0; font-size:clamp(1.8rem,5vw,2.6rem); margin:0; }
-  img{ max-width:min(90vw,420px); height:auto; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
-  p{ max-width:520px; line-height:1.6; font-size:1.05rem; }
-  a{
-    color:#060a1c; background:#f3c34e; text-decoration:none; font-weight:700;
-    padding:10px 22px; border-radius:999px; font-family:'Paper Mario', system-ui, sans-serif;
-    font-size:0.95rem;
+
+  *{ box-sizing:border-box; }
+  html{ touch-action:manipulation; background:var(--void); }
+
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'Mario Script', system-ui, sans-serif;
+    position:relative;
+    overflow-x:hidden;
+    background:var(--void);
+  }
+
+  h1,h2,h3, .brand-type{
+    font-family:'Paper Mario', system-ui, sans-serif;
+    margin:0;
+    line-height:1.15;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- animated hazard backdrop, hero only ---------- */
+  .hazard-field{
+    position:absolute;
+    inset:0;
+    height:100%;
+    background-image:url('stripe.png');
+    background-repeat:repeat;
+    background-size:var(--tile) var(--tile);
+    animation:crawl 3.6s linear infinite;
+    opacity:0.5;
+  }
+  .hazard-field::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(8,6,10,0.35), rgba(8,6,10,0.92) 72%),
+      linear-gradient(180deg, rgba(8,6,10,0.55) 0%, var(--void) 96%);
+  }
+  @keyframes crawl{
+    from{ background-position:0 0; }
+    to{ background-position:var(--tile) var(--tile); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hazard-field{ animation:none; }
+  }
+
+  /* ---------- hazard rule, used as a section seam ---------- */
+  .hazard-rule{
+    height:14px;
+    background-image:url('stripe.png');
+    background-repeat:repeat;
+    background-size:28px 28px;
+    clip-path:polygon(0 30%, 100% 0, 100% 70%, 0 100%);
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:48px 28px 64px;
+  }
+  .hero-lead{
+    position:relative;
+    z-index:1;
+    font-size:0.98rem;
+    color:var(--ink-dim);
+    max-width:480px;
+    line-height:1.6;
+    margin-bottom:18px;
+  }
+  .hero-lead strong{ color:var(--ink); font-weight:700; }
+  .hero img.logo{
+    position:relative;
+    z-index:1;
+    width:min(78vw, 400px);
+    height:auto;
+    filter:drop-shadow(0 14px 26px rgba(0,0,0,0.6));
+    margin-bottom:16px;
+  }
+  .hero-tag{
+    position:relative;
+    z-index:1;
+    font-size:clamp(1.05rem, 3.4vw, 1.3rem);
+    color:var(--gold);
+    max-width:460px;
+    line-height:1.5;
+  }
+
+  /* ---------- generic section ---------- */
+  section{ padding:56px 0; }
+  .section-title{
+    font-size:clamp(1.5rem, 4vw, 2rem);
+    color:var(--ink);
+    margin-bottom:22px;
+  }
+  .section-title span{ color:var(--red); }
+
+  p{ line-height:1.7; font-size:1.02rem; color:var(--ink-dim); max-width:66ch; }
+
+  /* ---------- about / credit ---------- */
+  .credit-line{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+  }
+  .credit-badge{
+    font-family:'Paper Mario', system-ui, sans-serif;
+    background:var(--red);
+    color:var(--void);
+    padding:6px 16px;
+    border-radius:3px;
+    font-size:0.85rem;
+    white-space:nowrap;
+  }
+
+  /* ---------- feature list, not numbered: it isn't a sequence ---------- */
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:2px;
+    background:var(--panel-edge);
+    border:1px solid var(--panel-edge);
+    margin-top:28px;
+  }
+  .feature-grid li{
+    list-style:none;
+    background:var(--panel);
+    padding:18px 20px;
+    color:var(--ink);
+    font-size:0.98rem;
+  }
+  .feature-grid li b{
+    display:block;
+    font-family:'Paper Mario', system-ui, sans-serif;
+    font-size:0.82rem;
+    color:var(--red);
+    margin-bottom:6px;
+    font-weight:400;
+  }
+  @media (max-width:560px){
+    .feature-grid{ grid-template-columns:1fr; }
+  }
+
+  .status-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:26px;
+  }
+  .status-chip{
+    border:1px solid var(--panel-edge);
+    padding:10px 16px;
+    font-size:0.9rem;
+    color:var(--ink-dim);
+  }
+  .status-chip b{ color:var(--ink); font-weight:700; }
+
+  /* ---------- gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:20px;
+    margin-top:10px;
+  }
+  .gallery figure{
+    margin:0;
+    background:var(--panel);
+    border:1px solid var(--panel-edge);
+    overflow:hidden;
+  }
+  .gallery figure:first-child{ grid-column:1 / -1; }
+  .gallery img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .gallery figcaption{
+    padding:12px 16px 14px;
+    font-size:0.88rem;
+    color:var(--ink-dim);
+  }
+  @media (max-width:640px){
+    .gallery{ grid-template-columns:1fr; }
+    .gallery figure:first-child{ grid-column:auto; }
+  }
+
+  /* ---------- disclaimer ---------- */
+  .disclaimer{
+    border:1px solid var(--red-deep);
+    background:linear-gradient(180deg, rgba(196,39,44,0.08), rgba(196,39,44,0));
+    padding:22px 24px;
+    margin-top:6px;
+  }
+  .disclaimer p{ max-width:none; color:var(--ink-dim); font-size:0.95rem; }
+  .disclaimer p + p{ margin-top:10px; }
+  .disclaimer strong{ color:var(--ink); }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:48px 0 72px;
+    text-align:center;
+  }
+  .back-link{
+    display:inline-block;
+    color:var(--void);
+    background:var(--gold);
+    text-decoration:none;
+    font-weight:700;
+    padding:10px 22px;
+    border-radius:999px;
+    font-family:'Paper Mario', system-ui, sans-serif;
+    font-size:0.9rem;
+    transition:transform 0.15s ease;
+  }
+  .back-link:hover{ transform:translateY(-2px); }
+  .back-link:focus-visible, a:focus-visible, .status-chip:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
   }
 </style>
 </head>
 <body>
-  <img src="TitleLogo.png" alt="Danger Zone U logo">
-  <h1>Danger Zone U is on its way!</h1>
-  <p>A solo project by one of Timpaniii&nbsp;Team's developers. The full project page is coming soon — check back shortly!</p>
-  <a href="../index.html">← Back to Timpaniii Team</a>
+
+  <section class="hero">
+    <div class="hazard-field" aria-hidden="true"></div>
+    <p class="hero-lead">A solo project by <strong>MoronSky</strong>, a developer on the <strong>Super Mario Epic Wii (SMEW)</strong> team, Timpaniii Team's flagship mod.</p>
+    <img class="logo" src="TitleLogo.png" alt="Danger Zone U logo">
+    <p class="hero-tag">New Super Mario Bros. U, reworked to hit harder — and stop playing fair.</p>
+  </section>
+
+  <div class="hazard-rule" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <section id="about">
+      <h2 class="section-title">What it's <span>about</span></h2>
+      <p>Danger Zone U starts from New Super Mario Bros. U and keeps the same bones, but pushes everything else further: levels go harder, throw more surprises, and don't let you coast through. It's a solo project, built at its own pace by a member of the SMEW team — Timpaniii Team has no hand in making it.</p>
+
+      <ul class="feature-grid">
+        <li><b>Themes</b>Custom themes, partially reworked</li>
+        <li><b>Tilesets</b>Fully custom tilesets</li>
+        <li><b>World map</b>Edited world map</li>
+        <li><b>Backgrounds</b>Custom backgrounds</li>
+        <li><b>HUD</b>Edited HUD</li>
+        <li><b>Worlds</b>Number still kept under wraps</li>
+      </ul>
+
+      <div class="status-row">
+        <span class="status-chip"><b>Multiplayer</b> — built with co-op in mind</span>
+        <span class="status-chip"><b>Cemu</b> — playable</span>
+        <span class="status-chip"><b>Wii U</b> — untested for now, no spare GamePad on hand</span>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <h2 class="section-title">In <span>screenshots</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="screenshot-1.webp" alt="Mario facing a caterpillar made of giant cookies, with blurred cookies filling the foreground">
+          <figcaption>A giant-cookie setting, where the caterpillar climbs higher than it looks.</figcaption>
+        </figure>
+        <figure>
+          <img src="screenshot-2.webp" alt="A giant piranha plant atop a stone platform, surrounded by twisted vines">
+          <figcaption>Twisted vines and a piranha plant lying in wait in a dense jungle setting.</figcaption>
+        </figure>
+        <figure>
+          <img src="screenshot-3.webp" alt="Moai-like stone statues in a purple and gold desert">
+          <figcaption>A desert bathed in purple, watched over by stone statues.</figcaption>
+        </figure>
+        <figure>
+          <img src="screenshot-4.webp" alt="A glowing Yoshi making its way through a pitch-black forest">
+          <figcaption>A nighttime forest where Yoshi seems to be the only thing still giving off light.</figcaption>
+        </figure>
+        <figure>
+          <img src="screenshot-5.webp" alt="Mario jumping between suspended question blocks in a cloudy sky level">
+          <figcaption>A sky-high finish, between hanging blocks and winged Koopas.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="disclaimer">
+      <div class="disclaimer">
+        <p><strong>About this page.</strong> Timpaniii Team is only handling promotion for Danger Zone U on this site.</p>
+        <p>We are not officially contributing to its development: <strong>MoronSky</strong> is its sole author.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <a class="back-link" href="../index.html">← Back to Timpaniii Team</a>
+  </footer>
+
 </body>
 </html>
