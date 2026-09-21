@@ -13,7 +13,7 @@
   --rouille: #ab4d00;
   --sol: #3e7e5d;
   --sol-fonce: #23563a;
-  --police: "PaperMarioFont", "Comic Sans MS", system-ui, sans-serif;
+  --police: "PaperMarioFont", system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
