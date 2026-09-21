@@ -1,0 +1,287 @@
+@font-face {
+  font-family: "PaperMarioFont";
+  src: url("../assets/fonts/PaperMarioFont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --encre: #2b1a10;
+  --papier: #fff2d2;
+  --orange: #ff9a2e;
+  --rouille: #ab4d00;
+  --sol: #3e7e5d;
+  --sol-fonce: #23563a;
+  --police: "PaperMarioFont", "Comic Sans MS", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--sol); }
+
+body {
+  margin: 0;
+  font-family: var(--police);
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  line-height: 1.35;
+  color: var(--papier);
+  background: var(--sol);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Scene: infinite horizontal scrolling, one speed per layer ---------- */
+
+.hero {
+  --h: max(40rem, 100svh);
+  position: relative;
+  height: var(--h);
+  overflow: hidden;
+  background: #5a3119;
+  isolation: isolate;
+}
+
+/*
+  Each layer is a strip wider than the screen (100% + 1 tile) whose background
+  repeats on X. It is translated by exactly one tile (--w) in a loop, so the
+  seam is invisible. The closer the layer, the faster it moves.
+*/
+.plan {
+  position: absolute;
+  left: 0;
+  width: calc(100% + var(--w));
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  animation: defile var(--duree) linear infinite;
+  will-change: transform;
+  z-index: var(--z);
+}
+
+@keyframes defile {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(calc(-1 * var(--w)), 0, 0); }
+}
+
+/* Solid ground: hides tile seams in the green area of the front layer */
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent, var(--sol) 45%);
+  pointer-events: none;
+}
+
+/* plan3.png: sky + clouds (farthest, slowest) */
+.plan-ciel {
+  --z: 1;
+  --w: calc(var(--h) * 0.75 * 580 / 617);
+  --duree: 120s;
+  top: 0;
+  height: calc(var(--h) * 0.75);
+  background-image: url("../assets/plan3.png");
+}
+
+/* plan1.png: misty forest (middle layer) */
+.plan-loin {
+  --z: 2;
+  --w: calc(var(--h) * 0.4 * 1400 / 504);
+  --duree: 70s;
+  bottom: calc(var(--h) * 0.24);
+  height: calc(var(--h) * 0.4);
+  background-image: url("../assets/plan1.png");
+}
+
+/* plan2.png: big trees + ground (closest, fastest) */
+.plan-avant {
+  --z: 3;
+  --w: calc(var(--h) * 0.6 * 2273 / 2096);
+  --duree: 38s;
+  bottom: 0;
+  height: calc(var(--h) * 0.6);
+  background-image: url("../assets/plan2.png");
+}
+
+/* ---------- Title ---------- */
+
+.hero-texte {
+  position: absolute;
+  z-index: 5;
+  top: clamp(1.25rem, 5svh, 3.5rem);
+  left: 0;
+  right: 0;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.presente {
+  margin: 0 0 0.25em;
+  font-size: clamp(1.2rem, 2.4vw, 2rem);
+  color: var(--papier);
+  text-shadow: 0 0.09em 0 var(--encre), 0 0 0.35em rgba(43, 26, 16, 0.6);
+}
+
+h1 {
+  margin: 0;
+  font-weight: normal;
+  font-size: clamp(3rem, 11.5vw, 9.5rem);
+  line-height: 0.95;
+  color: var(--papier);
+  -webkit-text-stroke: 0.14em var(--encre);
+  paint-order: stroke fill;
+  text-shadow: 0.05em 0.07em 0 var(--encre);
+  transform: rotate(-1.5deg);
+}
+
+h1 .sigle {
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+.accroche {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: clamp(1rem, 4svh, 3rem);
+  translate: -50% 0;
+  width: min(92%, 40rem);
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 0.09em 0 var(--sol-fonce);
+}
+
+/* ---------- Content on the ground ---------- */
+
+.sol {
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 5vw, 3rem);
+}
+
+main.sol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.carte {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  color: var(--encre);
+  background: var(--papier);
+  border: 0.2em solid var(--encre);
+  border-radius: 1.1rem 0.6rem 1.3rem 0.7rem;
+  box-shadow: 0.45rem 0.55rem 0 var(--sol-fonce);
+}
+
+.carte-direct    { transform: rotate(-1deg); }
+.carte-fondateurs { transform: rotate(0.8deg); }
+
+.carte h2 {
+  margin: 0 0 0.4em;
+  font-weight: normal;
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  line-height: 1.05;
+  color: var(--rouille);
+  text-wrap: balance;
+}
+
+.date {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.carte ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.carte li {
+  padding: 0.3em 0.7em;
+  font-size: clamp(1rem, 1.7vw, 1.5rem);
+  overflow-wrap: anywhere;
+  background: var(--orange);
+  border: 0.13em solid var(--encre);
+  border-radius: 0.5rem;
+}
+
+/* ---------- Discord ---------- */
+
+.discord {
+  padding-top: 0;
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.discord h2 {
+  margin: 0 0 0.6em;
+  font-weight: normal;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  text-shadow: 0 0.09em 0 var(--sol-fonce);
+  text-wrap: balance;
+}
+
+.bouton-discord {
+  display: inline-block;
+  padding: 0.35em 1em;
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  color: var(--encre);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  background: var(--orange);
+  border: 0.15em solid var(--encre);
+  border-radius: 0.8rem;
+  box-shadow: 0.3rem 0.4rem 0 var(--sol-fonce);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.bouton-discord:hover,
+.bouton-discord:focus-visible {
+  transform: translate(0.15rem, 0.2rem);
+  box-shadow: 0.15rem 0.2rem 0 var(--sol-fonce);
+}
+
+.bouton-discord:focus-visible {
+  outline: 0.2em solid var(--papier);
+  outline-offset: 0.2em;
+}
+
+/* ---------- Disclaimer ---------- */
+
+.pied {
+  padding-top: 0;
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.avertissement {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  text-align: center;
+  text-wrap: balance;
+  background: var(--sol-fonce);
+  border: 0.15em dashed var(--papier);
+  border-radius: 0.8rem;
+}
+
+.avertissement strong { font-weight: normal; color: var(--orange); }
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .plan { animation: none; }
+}
+
+@media (max-width: 40rem) {
+  .carte-direct, .carte-fondateurs { transform: none; }
+}
