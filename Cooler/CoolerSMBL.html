@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4caf2a">
+<title>Cooler Super Mario Bros. Land — A NSMBW mod by Archipelago</title>
+<meta name="description" content="Cooler Super Mario Bros. Land: a New Super Mario Bros. Wii mod created by Archipelago, developer of Super Mario Epic Wii. Trailer, screenshots and info.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cooler Super Mario Bros. Land — NSMBW Mod">
+<meta property="og:description" content="A New Super Mario Bros. Wii mod by Archipelago. Watch the 2026 trailer and see the screenshots!">
+<meta property="og:image" content="images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
+</div>
+
+<header class="hero">
+  <img class="logo" src="images/logo.png" alt="Cooler Super Mario Bros. Land">
+  <p class="badge">A mod for New Super Mario Bros. Wii</p>
+  <h1 class="sr">Cooler Super Mario Bros. Land</h1>
+  <p class="tagline">A nostalgic journey, reimagined in NSMBW style.</p>
+  <div class="cta">
+    <a class="btn" href="https://www.youtube.com/watch?v=THefV7kEses" target="_blank" rel="noopener">▶ Watch the trailer</a>
+    <a class="btn alt" href="#presentation">Learn more</a>
+  </div>
+  <div class="coins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+</header>
+
+<main>
+  <section id="presentation" class="card reveal">
+    <h2>🍄 About</h2>
+    <p><strong>Cooler Super Mario Bros. Land</strong> is a <em>New Super Mario Bros. Wii</em> mod developed by <strong>Archipelago</strong>, a member of the <em>Super Mario Epic Wii</em> development team.</p>
+    <p>Inspired by the spirit of <em>Super Mario Land</em>, the project was unveiled through its 2026 trailer. Watch it below and make up your own mind!</p>
+  </section>
+
+  <section class="card reveal">
+    <h2>🎬 2026 Trailer</h2>
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/THefV7kEses" title="Cooler Super Mario Bros. Land - 2026 Trailer" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="card reveal">
+    <h2>📸 Gallery</h2>
+    <p class="note" style="margin:0 0 12px">Tap an image to enlarge it.</p>
+    <div class="gallery">
+      <figure><img src="https://img.youtube.com/vi/THefV7kEses/maxresdefault.jpg" alt="Trailer frame" loading="lazy"><figcaption>2026 Trailer</figcaption></figure>
+      <figure><img src="images/screen1.jpg" alt="Desert" loading="lazy"><figcaption>Desert</figcaption></figure>
+      <figure><img src="images/screen2.jpg" alt="Icy Caverns" loading="lazy"><figcaption>Icy Caverns</figcaption></figure>
+      <figure><img src="images/screen3.jpg" alt="Underground Caves" loading="lazy"><figcaption>Underground Caves</figcaption></figure>
+      <figure><img src="images/screen4.jpg" alt="Crystal Caves" loading="lazy"><figcaption>Crystal Caves</figcaption></figure>
+      <figure><img src="images/screen5.jpg" alt="Lava Caverns" loading="lazy"><figcaption>Lava Caverns</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card reveal">
+    <h2>⭐ At a glance</h2>
+    <ul class="facts">
+      <li><b>Base game</b><span>New Super Mario Bros. Wii</span></li>
+      <li><b>Developer</b><span>Archipelago</span></li>
+      <li><b>Type</b><span>Mod / Hack</span></li>
+      <li><b>Status</b><span>In development</span></li>
+    </ul>
+    <p class="note">Update this list with official info: release date, number of levels, download link, etc.</p>
+  </section>
+
+  <section class="card reveal">
+    <h2>🔗 Links</h2>
+    <div class="cta left">
+      <a class="btn" href="https://www.youtube.com/watch?v=THefV7kEses" target="_blank" rel="noopener">YouTube Trailer</a>
+    </div>
+  </section>
+
+  <section class="disclaimer reveal" role="note">
+    <h2>⚠️ IMPORTANT DISCLAIMER</h2>
+    <p><strong>The Timpaniii Team as a whole is NOT the author of this mod.</strong></p>
+    <p><em>Cooler Super Mario Bros. Land</em> is a personal project made solely by <strong>Archipelago</strong>, a developer of <em>Super Mario Epic Wii</em>. This page is simply a promotional showcase to support his work.</p>
+    <p>This project is an unofficial mod and is not affiliated with Nintendo. <em>New Super Mario Bros. Wii</em> and <em>Super Mario</em> are trademarks of Nintendo.</p>
+  </section>
+</main>
+
+<div class="ground" aria-hidden="true"><span class="runner">🍄</span></div>
+<div class="lightbox" id="lb"><img alt=""></div>
+<footer>
+  <p>Promotional page — <strong>Timpaniii Team</strong> × Archipelago</p>
+</footer>
+
+<script>
+// Apparition douce des sections au défilement
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+}), { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Missing images -> placeholder
+document.querySelectorAll('.gallery img').forEach(img=>{
+  img.addEventListener('error',()=>img.parentElement.classList.add('missing'));
+});
+// Lightbox
+const lb=document.getElementById('lb'),lbi=lb.querySelector('img');
+document.querySelectorAll('.gallery figure').forEach(f=>f.addEventListener('click',()=>{
+  if(f.classList.contains('missing'))return;
+  lbi.src=f.querySelector('img').src;lb.classList.add('open');
+}));
+lb.addEventListener('click',()=>lb.classList.remove('open'));
+// Le bloc ? saute au toucher
+const logo=document.querySelector('.logo');
+logo.addEventListener('click',()=>{logo.classList.remove('hit');void logo.offsetWidth;logo.classList.add('hit');});
+</script>
+</body>
+</html>
