@@ -180,6 +180,16 @@ main.sol {
 
 .carte-direct    { transform: rotate(-1deg); }
 .carte-fondateurs { transform: rotate(0.8deg); }
+.carte-admin      { transform: rotate(-0.6deg); }
+.carte-concours   { transform: rotate(1deg); }
+
+.carte .note {
+  margin: 0.8em 0 0;
+  font-size: clamp(1rem, 1.7vw, 1.4rem);
+  line-height: 1.2;
+}
+
+.carte-concours .bouton-discord { margin-top: 1rem; }
 
 .carte h2 {
   margin: 0 0 0.4em;
@@ -283,5 +293,5 @@ main.sol {
 }
 
 @media (max-width: 40rem) {
-  .carte-direct, .carte-fondateurs { transform: none; }
+  .carte-direct, .carte-fondateurs, .carte-admin, .carte-concours { transform: none; }
 }
